@@ -1,8 +1,34 @@
 import React from 'react';
 import { Text, View, TextInput,TouchableOpacity, StyleSheet } from 'react-native';
 import AppHeader from '../components/appHeader'
+import db from '../config'
+import firebase from 'firebase';
 
 export default class StoryScreen extends React.Component {
+constructor(){
+  super();
+  this.state={
+    
+    text : '',
+    author: '',
+    story:''
+  }
+}
+
+  submitStory=async(name, story, author)=>{
+    db.collection("stories").add({
+      "story": story,
+      "author":author,
+      "name":name
+    })
+    this.setState({
+      name:'',
+      author:'',
+      story:''
+    })
+    return alert('Story succesfully submitted')
+  }
+  
     render() {
       return (
        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -12,15 +38,38 @@ export default class StoryScreen extends React.Component {
           <Text  style={styles.text}> Write Your Story Here</Text>
 
           <Text style={styles.title}>Story's name</Text>
-          <TextInput style={styles.input}/>
+          <TextInput style={styles.input}
+          onChangeText={(text)=>{
+            this.setState({
+              name:text
+            })
+          }}
+          value={this.state.name}
+          />
 
           <Text style={styles.titleText}>Author</Text>
-          <TextInput style={styles.input}/>
+          <TextInput style={styles.input} 
+            onChangeText={(text)=>{
+              this.setState({
+                author:text
+              })
+            }}
+            value={this.state.author}
+          />
 
           <Text style={styles.titleText}>Story</Text>
-          <TextInput style={styles.inputBox}/>
+          <TextInput style={styles.inputBox} 
+            onChangeText={(text)=>{
+              this.setState({
+                story:text
+              })
+            }}
+            value={this.state.story}
+            multiline
+          />
 
-          <TouchableOpacity  style={styles.button}>
+          <TouchableOpacity  style={styles.button} onPress={()=>{
+            this.submitStory(this.state.name, this.state.story, this.state.author)}}>
             <Text  style={styles.buttonText}>Submit</Text>
             </TouchableOpacity> 
             </View> 
