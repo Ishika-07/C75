@@ -41,7 +41,7 @@ constructor(){
           
            <AppHeader/>
            <View>
-          <Text  style={styles.text}> Write Your Story Here</Text>
+          <Text  style={styles.text}><Icon name='edit' type='ant-design' color='black'/> Write Your Story Here</Text>
 
           <Text style={styles.title} > <Icon name='pencil-square-o' type='font-awesome' color='#472668'/> Name</Text>
           <TextInput style={styles.input}

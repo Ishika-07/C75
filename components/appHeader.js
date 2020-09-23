@@ -1,12 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import {Header} from 'react-native-elements'
+import {Header, Icon} from 'react-native-elements'
 
 
 export default class AppHeader extends React.Component {
     render() {
       return (
 <Header 
+leftComponent={<Icon name='bed' type='font-awesome' color='white' />}
 backgroundColor={'#472668'}
 centerComponent={{
   text: 'Bedtime Stories',
