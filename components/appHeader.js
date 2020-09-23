@@ -7,14 +7,17 @@ export default class AppHeader extends React.Component {
     render() {
       return (
 <Header 
-backgroundColor={'pink'}
+backgroundColor={'#472668'}
 centerComponent={{
   text: 'Bedtime Stories',
   style:{
     color:'white',
     marginLeft:200,
     marginRight:200,
-    marginTop:10
+    marginTop:10,
+    fontWeight:'bold',
+    fontSize:30,
+
   }
 }}/>
 );
