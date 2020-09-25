@@ -1,11 +1,12 @@
 import React from 'react';
-import { Text, View,TouchableOpacity,TextInput,StyleSheet } from 'react-native';
+import { Text, View,TouchableOpacity,TextInput,StyleSheet, KeyboardAvoidingView } from 'react-native';
 import AppHeader from '../components/appHeader'
 import{Icon, SearchBar} from 'react-native-elements'
 
 export default class Searchscreen extends React.Component {
     render() {
       return (
+        <KeyboardAvoidingView>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center',backgroundColor:'#DDBBFF'  }}>
          <View >
          <AppHeader/>
@@ -24,6 +25,7 @@ export default class Searchscreen extends React.Component {
             </TouchableOpacity>
             </View>
         </View>
+        </KeyboardAvoidingView>
       );
     }
   }

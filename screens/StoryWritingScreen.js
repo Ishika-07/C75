@@ -1,10 +1,11 @@
 import React from 'react';
-import { Text, View, TextInput,TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, View, TextInput,TouchableOpacity, StyleSheet, KeyboardAvoidingView} from 'react-native';
 import AppHeader from '../components/appHeader'
 import { RFValue } from "react-native-responsive-fontsize";
 import db from '../config'
 import firebase from 'firebase';
 import { Icon } from 'react-native-elements';
+
 
 
 export default class StoryScreen extends React.Component {
@@ -32,11 +33,13 @@ constructor(){
       story:'',
       story_id:''
     })
-    return alert('Story succesfully submitted')
+    return alert("Story Succesfully Submitted") 
+   
   }
   
     render() {
       return (
+        <KeyboardAvoidingView>
        <View style={{padding:0.9 ,flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor:'#DDBBFF' }}>
           
            <AppHeader/>
@@ -82,6 +85,7 @@ constructor(){
             </TouchableOpacity> 
             </View> 
         </View>
+        </KeyboardAvoidingView>
       );
     }
   }
