@@ -25,7 +25,8 @@ constructor(){
       "story": story,
       "author":author,
       "name":name,
-      "story_id": Math.random().toString(36).substring(7)
+      "story_id": Math.random().toString(36).substring(7),
+      "date":firebase.firestore.Timestamp.now().toDate()
     })
     this.setState({
       name:'',
@@ -40,10 +41,10 @@ constructor(){
     render() {
       return (
         <KeyboardAvoidingView>
-       <View style={{padding:0.9 ,flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor:'#DDBBFF' }}>
+       <View style={{padding:0.9 ,flex: 1, justifyContent: 'center',  backgroundColor:'#DDBBFF' }}>
           
            <AppHeader/>
-           <View>
+           <View  style={{alignItems:'center'}}>
           <Text  style={styles.text}><Icon name='edit' type='ant-design' color='black'/> Write Your Story Here</Text>
 
           <Text style={styles.title} > <Icon name='pencil-square-o' type='font-awesome' color='#472668'/> Name</Text>
@@ -113,7 +114,9 @@ constructor(){
        borderRadius:20,
        borderColor:'#472668',
        boxShadow:'5px 5px',
-       margin:10
+       margin:10,
+       outline:'none',
+     
       },
       inputBox:{
         width:500, 
@@ -122,7 +125,8 @@ constructor(){
         borderColor:'#472668',
         boxShadow:'5px 5px',
         borderRadius:10,
-        margin:10
+        margin:10,
+        outline:'none'
       },
       button:{
         backgroundColor:'#472668',
@@ -133,7 +137,7 @@ constructor(){
       marginTop:10,
       justifyContent:'center',
       alignContent:'center',
-      marginLeft:200,
+      marginLeft:20,
       boxShadow:'5px 5px '
     },
     buttonText:{fontSize:15,

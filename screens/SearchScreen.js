@@ -12,82 +12,89 @@ export default class Searchscreen extends React.Component {
       this.state={
         allStories:[],
         lastVisibleStory:null,
-        search:''
+        search:'',
+        showFlatlist:false
       }
     }
-  /*   componentDidMount=async()=>{
-      const story = await db.collection('stories').limit(10).get();
-      story.docs.map((doc)=>{
-       this.setState({
-         allStories:[...this.state.allStories,doc.data()],
-         lastVisibleStory: doc
-       })
-     })
-    } */
+
     fetchMoreTransactions=async()=>{
       const story = await db.collection('stories').where('name',"==",this.state.search).startAfter(this.state.lastVisibleStory).limit(10).get();
       story.docs.map((doc)=>{
        this.setState({
          allStories:[...this.state.allStories,doc.data()],
          lastVisibleStory: doc,
-         search:text
        })
      })
     }
     
     searchStory=async(text)=>{
-       const story = await db.collection('stories').where('name',"==",text).get();
-       story.docs.map((doc)=>{
-        this.setState({
-          allStories:[...this.state.allStories,doc.data()],
-          lastVisibleStory: doc,
-          search:text
-        })
+      this.setState({ 
+              search:text, 
+              allStories:[]
       })
+      
+        const story = await db.collection('stories').where('name',"==",text).get();
+        story.docs.map((doc)=>{
+         this.setState({
+           allStories:[...this.state.allStories,doc.data()],
+           lastVisibleStory: doc, 
+           showFlatlist:true
+         })
+       })
+      
+
     }
     render() {
       return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center',backgroundColor:'#DDBBFF'  }}>
+        <View style={{ flex: 1,backgroundColor:'#DDBBFF'  }}>
         <KeyboardAvoidingView>
           <ScrollView>
          <View >
          <AppHeader/>
          </View>
-         <View>
-
+         <Text style={styles.text}>Search your story here</Text>
+         <View style={styles.search}>
           <SearchBar
           round
           style={styles.input}
           placeholder="Search here......"
-          onChangeText={(text)=>{
-            this.setState({search:text})
-            this.searchStory(this.state.search)
+          onChangeText={(text)=>{           
+            this.searchStory(text)
          
           }}
           onClear={()=>{
-            this.setState({search:''})
-            this.searchStory(this.state.search)
+            this.searchStory("")
            
           }}
           value={this.state.search}
          
       />
-            <FlatList
-              data={this.state.allStories}
-              renderItem={({item})=>(
-                <View style={{borderBottomWidth: 2}}>
-                  <Text>{'Story_id: ' + item.story_id}</Text>
-                  <Text>{'Story Name: ' + item.name}</Text>
-                  <Text>{'Story Author: ' + item.author}</Text>
-                  <Text>{'Story: ' + item.story}</Text>
-                </View>
-              )  
-              }
-              keyExtractor= {(item, index)=> index.toString()}
-              onEndReached ={this.fetchMoreTransactions}
-              onEndReachedThreshold={0.7}
-            />
-            </View>
+   
+      {console.log(this.state.allStories)}
+      
+          {
+            this.state.showFlatlist === true 
+            ?(<FlatList
+                data={this.state.allStories}
+                renderItem={({item})=>(
+                  <View style={{borderBottomWidth: 2, borderColor:"white", alignItems: "center"}}>
+                    <Text style={styles.story}>{'Story_id: ' + item.story_id}</Text>
+                    <Text style={styles.story}>{'Story Name: ' + item.name}</Text>
+                    <Text style={styles.story}>{'Story Author: ' + item.author}</Text>
+                    <Text style={styles.story}>{'Date: ' + item.date}</Text>                    
+                  </View>
+                )  
+                }
+                keyExtractor= {(item, index)=> index.toString()}
+                onEndReached ={this.fetchMoreTransactions}
+                onEndReachedThreshold={0.7}
+                
+              />)
+              :(
+             null
+              )
+       }
+             </View>
         </ScrollView>
         </KeyboardAvoidingView>
         </View>
@@ -99,11 +106,21 @@ export default class Searchscreen extends React.Component {
       text:{
         fontSize:20,
         fontWeight:'bold',
-        marginTop:50
+        marginTop:50,
+        textAlign:'center'
           },
       input:{
-        width:560,
-        height:0.1
+        backgroundColor:"whitesmoke",
+        textAlign:'center'
         },
-      
+      search:{
+        marginTop:50,
+        width:'60%',
+        alignSelf:'center',
+        borderRadius: 20,
+        backgroundColor:"#472668"
+      },
+      story:{
+        color:'white'
+      }
   })
