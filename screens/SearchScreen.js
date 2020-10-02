@@ -52,7 +52,7 @@ export default class Searchscreen extends React.Component {
          <View >
          <AppHeader/>
          </View>
-         <Text style={styles.text}>Search your story here</Text>
+         <Text style={styles.text}><Icon name='search' type='font-awesome'/>Search your story here</Text>
          <View style={styles.search}>
           <SearchBar
           round
